@@ -8,6 +8,6 @@ urlpatterns = [
     # url(r'^blog/', include('blog.urls')),
 
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^news/$', views.news),
+    url(r'^news/(\d{1,2})/(\d{1,3})/$', views.news),
 
 ]
