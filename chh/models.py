@@ -14,20 +14,30 @@ from django.db import models
 import json
 
 
-def getAllNews():
-        all_news = News.objects.all()
-        data = []
-        for news in all_news:
-            d = dict()
-            d['id'] = news.id
-            d['title'] = news.title
-            d['time'] = str(news.time.now())  # 时间转为字符串
-            d['link'] = news.link
-            d['author'] = news.author
-            d['message_count'] = news.message_count
-            d['type'] = news.type
-            data.append(d)
-        return json.dumps(data, ensure_ascii=False)
+def getAllNews(page, count):
+    try:
+        page = int(page)
+        count = int(count)
+    except ValueError:
+        return -1
+
+    if page <= 0:
+        page = 1
+    start = (page - 1) * count
+    end = page * count
+    all_news = News.objects.all()[start: end]
+    data = []
+    for news in all_news:
+        d = dict()
+        d['id'] = news.id
+        d['title'] = news.title
+        d['time'] = str(news.time.now())  # 时间转为字符串
+        d['link'] = news.link
+        d['author'] = news.author
+        d['message_count'] = news.message_count
+        d['type'] = news.type
+        data.append(d)
+    return json.dumps(data, ensure_ascii=False)
 
 
 class News(models.Model):
