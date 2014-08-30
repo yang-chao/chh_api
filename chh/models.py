@@ -35,7 +35,7 @@ def getAllNews(page, count):
         d['link'] = news.link
         d['author'] = news.author
         d['message_count'] = news.message_count
-        d['type'] = news.type
+        d['category'] = news.category
         data.append(d)
     return json.dumps(data, ensure_ascii=False)
 
@@ -45,7 +45,7 @@ class News(models.Model):
     title = models.CharField(max_length=45)
     link = models.CharField(max_length=100)
     time = models.DateTimeField(blank=True, null=True)
-    type = models.CharField(max_length=45, blank=True)
+    category = models.CharField(max_length=45, blank=True)
     author = models.CharField(max_length=45, blank=True)
     message_count = models.IntegerField(blank=True, null=True)
 
