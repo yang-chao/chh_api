@@ -25,13 +25,13 @@ def getAllNews(page, count):
         page = 1
     start = (page - 1) * count
     end = page * count
-    all_news = News.objects.all()[start: end]
+    all_news = News.objects.order_by('-time')[start: end]
     data = []
     for news in all_news:
         d = dict()
         d['id'] = news.id
         d['title'] = news.title
-        d['time'] = str(news.time.now())  # 时间转为字符串
+        d['time'] = str(news.time.strftime('%Y-%m-%d %H:%M:%S'))  # 时间转为字符串
         d['link'] = news.link
         d['author'] = news.author
         d['message_count'] = news.message_count
